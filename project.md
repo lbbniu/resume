@@ -1,6 +1,6 @@
 ## 说明
-coding.net检出地址 https://coding.net/vming/[项目编号].git
-svn检出地址     svn://192.168.1.10/sina/[项目编号]
++ coding.net检出地址 https://coding.net/vming/[项目编号].git
++ svn检出地址     svn://192.168.1.10/sina/[项目编号]
 
 
 ## 2014-2016
