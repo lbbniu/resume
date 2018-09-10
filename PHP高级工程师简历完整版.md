@@ -1,4 +1,4 @@
-### [删减版简历地址](https://github.com/lbbniu/resume/blob/master/PHP高级工程师简历删减版.md)
+### 此为完整版简历，[删减版简历地址](https://github.com/lbbniu/resume/blob/master/PHP高级工程师简历删减版.md)
 
 ## 联系方式
 **手机**：152903105**&emsp;&emsp;**Email**：<lbbniu@qq.com> &emsp;&emsp;**微信号**：lbbniu
