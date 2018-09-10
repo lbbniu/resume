@@ -47,6 +47,8 @@
 
 ### 联想刮刮乐 app74
 
+### 淘手游网站改版（YII框架） 
+
 ### 巴布豆（手机和pc） app75
 
 ### htc one m8申请 app76
@@ -481,6 +483,8 @@
 ### 蓝粉心意 用耳朵感受蓝粉心意 app285 mugeda
 
 ### 飞鹤二期 app286 mugeda
+
+### 唐三彩 apicloud-tangsancai
 
 ### 银联翻牌游戏 app287 mugeda
 
