@@ -199,3 +199,183 @@ class Solution {
 }
 ```
 
+#### [04-14 445. 两数相加 II](https://leetcode-cn.com/problems/add-two-numbers-ii/)
+
+```php
+/**
+ * Definition for a singly-linked list.
+ * class ListNode {
+ *     public $val = 0;
+ *     public $next = null;
+ *     function __construct($val) { $this->val = $val; }
+ * }
+ */
+class Solution {
+
+    /**
+     * 方法一：栈
+     * 方法二：链表翻转相加
+     * @param ListNode $l1
+     * @param ListNode $l2
+     * @return ListNode
+     */
+    function addTwoNumbers($l1, $l2) {
+        if (!$l1) return $l2;
+        if (!$l2) return $l1;
+        $s1 = $s2 = [];//数组模拟栈
+        while ($l1) {
+            $s1[] = $l1->val;
+            $l1 = $l1->next;
+        }
+        while ($l2) {
+            $s2[] = $l2->val;
+            $l2 = $l2->next;
+        }
+        $sum = 0;
+        $head = null;
+        while ($s1 || $s2 || $sum > 0) {
+            $sum += $s1 ? array_pop($s1) : 0;
+            $sum += $s2 ? array_pop($s2) : 0;
+            $node = new ListNode($sum % 10);
+            $node->next = $head;
+            $head = $node;
+            $sum = intval($sum / 10);
+        }
+        return $head;
+    }
+}
+```
+
+#### [04-15 542. 01 矩阵](https://leetcode-cn.com/problems/01-matrix/)
+
+[dp解法](https://leetcode.com/problems/01-matrix/discuss/101051/Simple-Java-solution-beat-99-(use-DP))
+
+```php
+class Solution {
+
+    /**
+     * @param Integer[][] $matrix
+     * @return Integer[][]
+     */
+    function updateMatrix($matrix) {
+        $m = count($matrix);
+        if ($m == 0) return $matrix;
+        $n = count($matrix[0]);
+        $ans = [];
+        $queue = [];
+        for ($i = 0; $i < $m; $i++) {
+            for ($j = 0; $j < $n; $j++) {
+                if ($matrix[$i][$j] == 0) {
+                    $ans[$i][$j] = 0;
+                    $queue[] = [$i, $j];
+                } else {
+                    $ans[$i][$j] = $m + $n; //最大值
+                }
+            }
+        }
+        $dx = [0, 1, 0, -1];
+        $dy = [1, 0, -1, 0];
+        while ($queue) {
+            [$x, $y] = array_shift($queue);
+            for($i = 0; $i < 4; $i++){
+                $nx = $x + $dx[$i];
+                $ny = $y + $dy[$i];
+                if($nx >= 0 && $nx < $m && $ny >= 0 && $y < $n){
+                    if($ans[$nx][$ny] > $ans[$x][$y] + 1){
+                        $ans[$nx][$ny] = $ans[$x][$y] + 1;
+                        $queue[] = [$nx, $ny];
+                    }
+                }
+            }
+        }
+        return $ans;
+    }
+}
+```
+
+#### [04-16 56. 合并区间](https://leetcode-cn.com/problems/merge-intervals/)
+
+```php
+class Solution {
+
+    /**
+     * @param Integer[][] $intervals
+     * @return Integer[][]
+     */
+    function merge($intervals) {
+        $count = count($intervals);
+        $output = [];
+        array_multisort(array_column($intervals, 0),$intervals);
+        for ($i = 0, $j = 0; $i < $count; $i++) {
+            if (empty($output) || $output[$j - 1][1] < $intervals[$i][0]) {
+                $output[$j++] = $intervals[$i];
+            } else {
+                $output[$j - 1][1] = max($intervals[$i][1], $output[$j - 1][1]);
+            } 
+        }
+        return $output;
+    }
+}
+```
+
+#### [04-17 55. 跳跃游戏](https://leetcode-cn.com/problems/jump-game/)
+
+```php
+class Solution {
+    /**
+     * 方法一：贪心法
+     * 方法二：动态规划
+     * @param Integer[] $nums
+     * @return Boolean
+     */
+    function canJump($nums) {
+        if (!$nums) return false;
+        $revCanJump = count($nums) - 1;
+        for ($i = $revCanJump; $i >= 0; $i--) {
+            if ($nums[$i] + $i >= $revCanJump) {
+                $revCanJump = $i;
+            }
+        }
+        return $revCanJump == 0;
+    }
+}
+```
+
+#### [04-21 1248. 统计「优美子数组」](https://leetcode-cn.com/problems/count-number-of-nice-subarrays/)
+
+```php
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @param Integer $k
+     * @return Integer
+     */
+    function numberOfSubarrays($nums, $k) {
+		$n = count($nums);
+        $odd = [];
+        $ans = $cnt = 0;
+        $odd[0] = -1; 
+        for ($i = 0; $i < $n; $i++) {
+            if ($nums[$i] & 1) $odd[++$cnt] = $i;
+        }
+        $odd[++$cnt] = $n;
+        for ($i = 1; $i + $k <= $cnt; $i++) {
+            $ans + ($odd[$i] - $odd[$i - 1]) * ($odd[$i + $k] - $odd[$i + $k -1]);
+        }
+        return $ans;
+    }
+    
+     function numberOfSubarrays($nums, $k) {
+		$n = count($nums);
+        $ans = $odd = 0;
+        $cnt = [1];
+        for ($i = 0; $i < $n; $i++) {
+            $odd += $nums[$i] & 1;
+            $ans += $odd > $k ? $cnt[$odd - $k] : 0;
+           	$cnt[$odd] += 1;
+        }
+        return $ans;
+    }
+}
+```
